@@ -3,7 +3,7 @@
 #include <string>
 
 #include <k4a/k4a.hpp>
-#include <k4abt.h>
+//#include <k4abt.h>
 
 #include "ofParameter.h"
 #include "ofPixels.h"
@@ -36,6 +36,7 @@ namespace ofxAzureKinect
 		DeviceSettings();
 	};
 
+	/*
 	struct BodyTrackingSettings
 	{
 		SensorOrientation sensorOrientation;
@@ -46,6 +47,7 @@ namespace ofxAzureKinect
 
 		BodyTrackingSettings();
 	};
+	*/
 
 	class Device 
 		: public Stream
@@ -61,7 +63,8 @@ namespace ofxAzureKinect
 		bool open(const std::string& serialNumber);
 		bool close();
 
-		bool startCameras(DeviceSettings deviceSettings = DeviceSettings(), BodyTrackingSettings bodyTrackingSettings = BodyTrackingSettings());
+		//bool startCameras(DeviceSettings deviceSettings = DeviceSettings(), BodyTrackingSettings bodyTrackingSettings = BodyTrackingSettings());
+		bool startCameras(DeviceSettings deviceSettings = DeviceSettings());
 		bool stopCameras();
 
 		bool startRecording(std::string filepath = "");

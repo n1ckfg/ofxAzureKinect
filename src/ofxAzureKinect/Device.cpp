@@ -21,12 +21,14 @@ namespace ofxAzureKinect
 		, syncImages(true)
 	{}
 
+	/*
 	BodyTrackingSettings::BodyTrackingSettings()
 		: sensorOrientation(K4ABT_SENSOR_ORIENTATION_DEFAULT)
 		, processingMode(K4ABT_TRACKER_PROCESSING_MODE_GPU)
 		, gpuDeviceID(0)
 		, updateBodies(false)
 	{}
+	*/
 
 	int Device::getInstalledCount()
 	{
@@ -144,7 +146,8 @@ namespace ofxAzureKinect
 		return true;
 	}
 
-	bool Device::startCameras(DeviceSettings deviceSettings, BodyTrackingSettings bodyTrackingSettings)
+	//bool Device::startCameras(DeviceSettings deviceSettings, BodyTrackingSettings bodyTrackingSettings)
+	bool Device::startCameras(DeviceSettings deviceSettings)
 	{
 		if (!this->bOpen)
 		{
@@ -165,8 +168,8 @@ namespace ofxAzureKinect
 		this->config.subordinate_delay_off_master_usec = deviceSettings.subordinateDelayUsec;
 
 		// Generate tracker config.
-		this->trackerConfig.sensor_orientation = bodyTrackingSettings.sensorOrientation;
-		this->trackerConfig.gpu_device_id = bodyTrackingSettings.gpuDeviceID;
+		//this->trackerConfig.sensor_orientation = bodyTrackingSettings.sensorOrientation;
+		//this->trackerConfig.gpu_device_id = bodyTrackingSettings.gpuDeviceID;
 
 		// Set update flags.
 		this->bUpdateColor = deviceSettings.updateColor;
@@ -174,7 +177,7 @@ namespace ofxAzureKinect
 		this->bUpdateWorld = deviceSettings.updateWorld;
 		this->bUpdateVbo = deviceSettings.updateWorld && deviceSettings.updateVbo;
 
-		this->bUpdateBodies = bodyTrackingSettings.updateBodies;
+		//this->bUpdateBodies = bodyTrackingSettings.updateBodies;
 
 		// Get calibration.
 		try
@@ -193,6 +196,7 @@ namespace ofxAzureKinect
 			this->transformation = k4a::transformation(this->calibration);
 		}
 
+		/*
 		if (this->bUpdateBodies)
 		{
 			// Create tracker.
@@ -204,6 +208,7 @@ namespace ofxAzureKinect
 				k4abt_tracker_set_temporal_smoothing(this->bodyTracker, this->jointSmoothing);
 			}));
 		}
+		*/
 
 		if (this->bUpdateWorld)
 		{
@@ -259,12 +264,14 @@ namespace ofxAzureKinect
 		this->depthToWorldImg.reset();
 		this->transformation.destroy();
 
+		/*
 		if (this->bUpdateBodies)
 		{
 			k4abt_tracker_shutdown(this->bodyTracker);
 			k4abt_tracker_destroy(this->bodyTracker);
 			this->bodyTracker = nullptr;
 		}
+		*/
 
 		this->device.stop_cameras();
 
@@ -338,6 +345,7 @@ namespace ofxAzureKinect
 	{
 		Stream::updatePixels();
 
+		/*
 		if (this->bUpdateBodies)
 		{
 			k4a_wait_result_t enqueueResult = k4abt_tracker_enqueue_capture(this->bodyTracker, this->capture.handle(), K4A_WAIT_INFINITE);
@@ -384,6 +392,7 @@ namespace ofxAzureKinect
 				}
 			}
 		}
+		*/
 
 		if (this->bRecording)
 		{
